@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj" />
+    <Project Path="src/ECX.VisitorManagement.Application/ECX.VisitorManagement.Application.csproj" />
+    <Project Path="src/ECX.VisitorManagement.Domain/ECX.VisitorManagement.Domain.csproj" />
+    <Project Path="src/ECX.VisitorManagement.Infrastructure/ECX.VisitorManagement.Infrastructure.csproj" />
+  </Folder>
+</Solution>
