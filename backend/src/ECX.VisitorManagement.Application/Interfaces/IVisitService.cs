@@ -7,6 +7,7 @@ public interface IVisitService
     Task<IEnumerable<VisitDto>> GetAllAsync();
     Task<VisitDto?> GetByIdAsync(Guid id);
     Task<VisitDto> CreateAsync(CreateVisitRequest request, Guid checkedInByUserId);
+    Task<VisitDto> UpdateAsync(Guid id, UpdateVisitRequest request);
     Task<VisitDto> CheckInAsync(Guid visitId, Guid userId);
     Task<VisitDto> CheckOutAsync(Guid visitId, Guid userId, string? notes = null);
     Task<IEnumerable<VisitDto>> GetVisitsByVisitorAsync(Guid visitorId);

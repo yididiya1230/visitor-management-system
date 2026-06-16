@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +15,7 @@ import { Department } from '../../../core/models/department.model';
   selector: 'app-departments-list',
   standalone: true,
   imports: [
-    ReactiveFormsModule, NgFor, NgIf,
+    ReactiveFormsModule, NgIf,
     MatCardModule, MatTableModule, MatButtonModule,
     MatIconModule, MatFormFieldModule, MatInputModule, MatSnackBarModule
   ],

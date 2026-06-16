@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { NgIf, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-reports',
   standalone: true,
   imports: [
-    ReactiveFormsModule, FormsModule, NgFor, NgIf, DatePipe,
+    ReactiveFormsModule, FormsModule, NgIf, DatePipe,
     MatCardModule, MatTableModule, MatButtonModule, MatIconModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule,
     MatNativeDateModule, MatSnackBarModule

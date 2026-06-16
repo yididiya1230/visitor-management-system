@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,13 +19,13 @@ import { Host } from '../../../core/models/host.model';
   selector: 'app-visit-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule, RouterLink, NgFor, NgIf,
+    ReactiveFormsModule, RouterLink, NgFor,
     MatCardModule, MatFormFieldModule, MatInputModule,
     MatSelectModule, MatButtonModule, MatIconModule, MatSnackBarModule
   ],
   template: `
     <div class="page-header">
-      <h1>New Visit</h1>
+      <h1>{{ isEdit ? 'Edit' : 'New' }} Visit</h1>
     </div>
 
     <mat-card>
@@ -62,7 +62,7 @@ import { Host } from '../../../core/models/host.model';
           <div class="form-actions">
             <button mat-button routerLink="/visits">Cancel</button>
             <button mat-raised-button color="primary" type="submit" [disabled]="visitForm.invalid">
-              Create Visit
+              {{ isEdit ? 'Update' : 'Create' }} Visit
             </button>
           </div>
         </form>
@@ -81,12 +81,15 @@ export class VisitFormComponent implements OnInit {
   visitForm: FormGroup;
   visitors: Visitor[] = [];
   hosts: Host[] = [];
+  isEdit = false;
+  visitId = '';
 
   constructor(
     private fb: FormBuilder,
     private visitService: VisitService,
     private visitorService: VisitorService,
     private hostService: HostService,
+    private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -101,16 +104,40 @@ export class VisitFormComponent implements OnInit {
   ngOnInit(): void {
     this.visitorService.getAll().subscribe(data => this.visitors = data);
     this.hostService.getAll().subscribe(data => this.hosts = data);
+
+    this.visitId = this.route.snapshot.params['id'];
+    if (this.visitId) {
+      this.isEdit = true;
+      this.visitService.getById(this.visitId).subscribe({
+        next: (v) => this.visitForm.patchValue({
+          visitorId: v.visitorId,
+          hostId: v.hostId,
+          purpose: v.purpose,
+          notes: v.notes
+        })
+      });
+    }
   }
 
   onSubmit(): void {
     if (this.visitForm.invalid) return;
 
-    this.visitService.create(this.visitForm.value).subscribe({
-      next: () => {
-        this.snackBar.open('Visit created successfully', 'Close', { duration: 3000 });
-        this.router.navigate(['/visits']);
-      }
-    });
+    const request = this.visitForm.value;
+
+    if (this.isEdit) {
+      this.visitService.update(this.visitId, request).subscribe({
+        next: () => {
+          this.snackBar.open('Visit updated successfully', 'Close', { duration: 3000 });
+          this.router.navigate(['/visits']);
+        }
+      });
+    } else {
+      this.visitService.create(request).subscribe({
+        next: () => {
+          this.snackBar.open('Visit created successfully', 'Close', { duration: 3000 });
+          this.router.navigate(['/visits']);
+        }
+      });
+    }
   }
 }

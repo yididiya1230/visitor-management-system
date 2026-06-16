@@ -1,5 +1,6 @@
 using System.Text;
 using ECX.VisitorManagement.API.Middleware;
+using Microsoft.EntityFrameworkCore;
 using ECX.VisitorManagement.Application;
 using ECX.VisitorManagement.Infrastructure;
 using ECX.VisitorManagement.Infrastructure.Data;
@@ -37,7 +38,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://visitor-management-system-lime.vercel.app")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -49,14 +50,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.Database.MigrateAsync();
     await DbSeeder.SeedAsync(context);
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

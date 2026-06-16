@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,7 @@ import { Host } from '../../../core/models/host.model';
   selector: 'app-hosts-list',
   standalone: true,
   imports: [
-    RouterLink, NgFor, NgIf,
+    RouterLink, NgIf,
     MatCardModule, MatTableModule, MatButtonModule,
     MatIconModule, MatSnackBarModule
   ],

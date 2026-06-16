@@ -68,6 +68,9 @@ import { Department } from '../../../core/models/department.model';
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Phone (Optional)</mat-label>
             <input matInput formControlName="phoneNumber">
+            <mat-error *ngIf="hostForm.get('phoneNumber')?.invalid && hostForm.get('phoneNumber')?.touched">
+              Enter a valid phone number
+            </mat-error>
           </mat-form-field>
           <div class="form-actions">
             <button mat-button routerLink="/hosts">Cancel</button>
@@ -107,7 +110,7 @@ export class HostFormComponent implements OnInit {
       employeeCode: ['', Validators.required],
       jobTitle: ['', Validators.required],
       departmentId: ['', Validators.required],
-      phoneNumber: ['']
+      phoneNumber: ['', Validators.pattern(/^\+?[\d\s\-\(\)]{7,15}$/)]
     });
   }
 

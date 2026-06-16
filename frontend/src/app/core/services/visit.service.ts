@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Visit, CreateVisitRequest, CheckOutRequest } from '../models/visit.model';
+import { Visit, CreateVisitRequest, UpdateVisitRequest, CheckOutRequest } from '../models/visit.model';
 
 @Injectable({ providedIn: 'root' })
 export class VisitService {
@@ -31,6 +31,10 @@ export class VisitService {
 
   create(request: CreateVisitRequest): Observable<Visit> {
     return this.http.post<Visit>(this.apiUrl, request);
+  }
+
+  update(id: string, request: UpdateVisitRequest): Observable<Visit> {
+    return this.http.put<Visit>(`${this.apiUrl}/${id}`, request);
   }
 
   checkIn(id: string): Observable<Visit> {

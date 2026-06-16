@@ -37,3 +37,11 @@ public class CheckOutRequest
     public Guid VisitId { get; set; }
     public string? Notes { get; set; }
 }
+
+public class UpdateVisitRequest
+{
+    public Guid VisitorId { get; set; }
+    public Guid HostId { get; set; }
+    public string Purpose { get; set; } = string.Empty;
+    public string? Notes { get; set; }
+}

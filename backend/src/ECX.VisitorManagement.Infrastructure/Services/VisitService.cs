@@ -49,6 +49,27 @@ public class VisitService : IVisitService
         return _mapper.Map<VisitDto>(visit);
     }
 
+    public async Task<VisitDto> UpdateAsync(Guid id, UpdateVisitRequest request)
+    {
+        var visit = await _unitOfWork.Visits.GetByIdAsync(id);
+        if (visit == null)
+            throw new KeyNotFoundException($"Visit with ID {id} not found");
+
+        if (visit.Status != VisitStatus.Pending)
+            throw new InvalidOperationException("Cannot edit a visit that is not in Pending status");
+
+        visit.VisitorId = request.VisitorId;
+        visit.HostId = request.HostId;
+        visit.Purpose = request.Purpose;
+        visit.Notes = request.Notes;
+        visit.UpdatedAt = DateTime.UtcNow;
+
+        _unitOfWork.Visits.Update(visit);
+        await _unitOfWork.SaveChangesAsync();
+
+        return _mapper.Map<VisitDto>(visit);
+    }
+
     public async Task<VisitDto> CheckInAsync(Guid visitId, Guid userId)
     {
         var visit = await _unitOfWork.Visits.GetByIdAsync(visitId);

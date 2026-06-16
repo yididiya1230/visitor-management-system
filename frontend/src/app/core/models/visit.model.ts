@@ -21,6 +21,13 @@ export interface CreateVisitRequest {
   notes?: string;
 }
 
+export interface UpdateVisitRequest {
+  visitorId: string;
+  hostId: string;
+  purpose: string;
+  notes?: string;
+}
+
 export interface CheckInRequest {
   visitId: string;
 }

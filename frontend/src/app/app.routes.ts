@@ -40,6 +40,11 @@ export const routes: Routes = [
         canActivate: [roleGuard(['Admin', 'Receptionist'])]
       },
       {
+        path: 'visits/:id/edit',
+        loadComponent: () => import('./features/visits/visit-form/visit-form.component').then(m => m.VisitFormComponent),
+        canActivate: [roleGuard(['Admin', 'Receptionist'])]
+      },
+      {
         path: 'hosts',
         loadComponent: () => import('./features/hosts/hosts-list/hosts-list.component').then(m => m.HostsListComponent),
         canActivate: [roleGuard(['Admin'])]
@@ -59,7 +64,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent),
         canActivate: [roleGuard(['Admin'])]
       },
-      { path: '**', redirectTo: '/dashboard' }
+      { path: '**', redirectTo: '/login' }
     ]
   }
 ];

@@ -40,10 +40,17 @@ import { VisitorService } from '../../../core/services/visitor.service';
             <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
               <input matInput formControlName="email" type="email">
+              <mat-error *ngIf="visitorForm.get('email')?.invalid && visitorForm.get('email')?.touched">
+                Enter a valid email address
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>
               <input matInput formControlName="phoneNumber" required>
+              <mat-error *ngIf="visitorForm.get('phoneNumber')?.invalid && visitorForm.get('phoneNumber')?.touched">
+                <span *ngIf="visitorForm.get('phoneNumber')?.errors?.['required']">Phone number is required</span>
+                <span *ngIf="visitorForm.get('phoneNumber')?.errors?.['pattern']">Enter a valid phone number</span>
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="form-row">
@@ -94,8 +101,8 @@ export class VisitorFormComponent implements OnInit {
     this.visitorForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: [''],
-      phoneNumber: ['', Validators.required],
+      email: ['', Validators.email],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?[\d\s\-\(\)]{7,15}$/)]],
       company: [''],
       idCardNumber: [''],
       address: ['']

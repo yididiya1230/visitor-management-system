@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { NgIf, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { AuthService } from '../../../core/services/auth.service';
   selector: 'app-visitors-list',
   standalone: true,
   imports: [
-    RouterLink, NgFor, NgIf, DatePipe, FormsModule,
+    RouterLink, NgIf, DatePipe, FormsModule,
     MatCardModule, MatTableModule, MatButtonModule,
     MatIconModule, MatFormFieldModule, MatInputModule, MatSnackBarModule
   ],

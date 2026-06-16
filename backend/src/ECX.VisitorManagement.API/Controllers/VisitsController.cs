@@ -64,6 +64,14 @@ public class VisitsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = visit.Id }, visit);
     }
 
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Receptionist")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateVisitRequest request)
+    {
+        var visit = await _visitService.UpdateAsync(id, request);
+        return Ok(visit);
+    }
+
     [HttpPost("{id}/check-in")]
     [Authorize(Roles = "Admin,Receptionist")]
     public async Task<IActionResult> CheckIn(Guid id)

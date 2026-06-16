@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { VisitService } from '../../../core/services/visit.service';
 import { Visit } from '../../../core/models/visit.model';
@@ -15,14 +18,20 @@ import { AuthService } from '../../../core/services/auth.service';
   selector: 'app-visits-list',
   standalone: true,
   imports: [
-    RouterLink, NgFor, NgIf, DatePipe,
+    RouterLink, NgIf, FormsModule,
     MatCardModule, MatTableModule, MatButtonModule,
-    MatIconModule, MatTabsModule, MatSnackBarModule
+    MatIconModule, MatTabsModule, MatFormFieldModule,
+    MatInputModule, MatSnackBarModule
   ],
   template: `
     <div class="page-header">
       <h1>Visits</h1>
       <div class="header-actions">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search visits...</mat-label>
+          <input matInput [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Visitor, host, purpose...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
         <button mat-raised-button color="primary" routerLink="/visits/new" *ngIf="canEdit">
           <mat-icon>add</mat-icon> New Visit
         </button>
@@ -63,6 +72,10 @@ import { AuthService } from '../../../core/services/auth.service';
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let v">
+              <button mat-icon-button color="primary" [routerLink]="['/visits', v.id, 'edit']"
+                      *ngIf="v.status === 'Pending' && canEdit" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
               <button mat-raised-button color="accent" (click)="checkIn(v.id)"
                       *ngIf="v.status === 'Pending' && canEdit" class="action-btn">
                 Check In
@@ -81,9 +94,10 @@ import { AuthService } from '../../../core/services/auth.service';
     </mat-card>
   `,
   styles: [`
-    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
     .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
-    .header-actions { display: flex; gap: 12px; }
+    .header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .search-field { width: 300px; }
     .full-table { width: 100%; }
     .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     .checked-in { background: #e8f5e9; color: #2e7d32; }
@@ -97,14 +111,24 @@ import { AuthService } from '../../../core/services/auth.service';
 export class VisitsListComponent implements OnInit {
   visits: Visit[] = [];
   filter: 'all' | 'active' = 'all';
+  searchTerm = '';
   displayedColumns = ['visitor', 'host', 'purpose', 'status', 'actions'];
   canEdit = false;
 
   get filteredVisits(): Visit[] {
+    let result = this.visits;
     if (this.filter === 'active') {
-      return this.visits.filter(v => v.status === 'CheckedIn' || v.status === 'Pending');
+      result = result.filter(v => v.status === 'CheckedIn' || v.status === 'Pending');
     }
-    return this.visits;
+    if (this.searchTerm.trim()) {
+      const term = this.searchTerm.toLowerCase();
+      result = result.filter(v =>
+        v.visitorName.toLowerCase().includes(term) ||
+        v.hostName.toLowerCase().includes(term) ||
+        v.purpose.toLowerCase().includes(term)
+      );
+    }
+    return result;
   }
 
   constructor(
@@ -124,6 +148,10 @@ export class VisitsListComponent implements OnInit {
     this.visitService.getAll().subscribe({
       next: (data) => this.visits = data
     });
+  }
+
+  onSearch(): void {
+    // filtering is done reactively via filteredVisits getter
   }
 
   checkIn(id: string): void {
