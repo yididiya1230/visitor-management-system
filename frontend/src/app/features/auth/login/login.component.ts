@@ -143,7 +143,7 @@ import { AuthService } from "../../../core/services/auth.service";
         max-width: 320px;
       }
       .logo-img {
-        height: 48px;
+        height: 80px;
         width: auto;
         margin-bottom: 32px;
       }

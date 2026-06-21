@@ -144,8 +144,8 @@ import { AuthService } from "../../../core/services/auth.service";
         border-bottom: 1px solid #e0e0e0;
       }
       .sidenav-logo {
-        width: 40px;
-        height: 40px;
+        width: 56px;
+        height: 56px;
         object-fit: contain;
       }
       .sidenav-title {
