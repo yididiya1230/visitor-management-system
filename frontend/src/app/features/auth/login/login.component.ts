@@ -30,80 +30,142 @@ import { AuthService } from "../../../core/services/auth.service";
   ],
   template: `
     <div class="login-container">
-      <mat-card class="login-card">
-        <div class="login-header">
-          <img src="assets/logo.svg" alt="ECX Logo" class="logo-img">
-          <h1>Visitor Management System</h1>
-          <p class="subtitle">Sign in to your account</p>
+      <div class="login-card-wrapper">
+        <div class="brand-section">
+          <div class="brand-content">
+            <img src="assets/logo.svg" alt="ECX Logo" class="logo-img">
+            <h2>Visitor Management System</h2>
+            <p class="brand-desc">Secure, streamlined visitor tracking and management for ECX facilities.</p>
+            <div class="brand-features">
+              <div class="feature">
+                <mat-icon>verified_user</mat-icon>
+                <span>Role-based access control</span>
+              </div>
+              <div class="feature">
+                <mat-icon>qr_code_scanner</mat-icon>
+                <span>Digital check-in / check-out</span>
+              </div>
+              <div class="feature">
+                <mat-icon>assessment</mat-icon>
+                <span>Real-time reports & analytics</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Username</mat-label>
-            <input
-              matInput
-              formControlName="username"
-              placeholder="Enter username"
-            />
-            <mat-icon matPrefix>person</mat-icon>
-          </mat-form-field>
+        <mat-card class="login-card">
+          <div class="login-header">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Sign in to your account</p>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              type="password"
-              formControlName="password"
-              placeholder="Enter password"
-            />
-            <mat-icon matPrefix>lock</mat-icon>
-          </mat-form-field>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" placeholder="Enter username" />
+              <mat-icon matPrefix>person_outline</mat-icon>
+            </mat-form-field>
 
-          <button
-            mat-raised-button
-            color="primary"
-            class="full-width login-btn"
-            [disabled]="loginForm.invalid || loading"
-          >
-            <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
-            <span *ngIf="!loading">Sign In</span>
-          </button>
-        </form>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" placeholder="Enter password" />
+              <mat-icon matPrefix>lock_outline</mat-icon>
+            </mat-form-field>
 
-        <p class="error-text" *ngIf="error">{{ error }}</p>
+            <button mat-raised-button color="primary" class="full-width login-btn" [disabled]="loginForm.invalid || loading">
+              <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+              <span *ngIf="!loading">Sign In</span>
+            </button>
+          </form>
 
-        <div class="login-footer">
-          <p>{{ "Default: admin / Admin@123" }}</p>
-        </div>
-      </mat-card>
+          <p class="error-text" *ngIf="error">{{ error }}</p>
+
+          <div class="login-footer">
+            <p>Demo: <strong>admin</strong> / <strong>Admin&#64;123</strong></p>
+          </div>
+        </mat-card>
+      </div>
     </div>
   `,
   styles: [
     `
       .login-container {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #1a237e 0%, #0277bd 100%);
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        padding: 20px;
+      }
+      .login-card-wrapper {
+        display: flex;
+        max-width: 900px;
+        width: 100%;
+        min-height: 560px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(26, 35, 126, 0.12);
+      }
+      .brand-section {
+        flex: 1;
+        background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #0277bd 100%);
+        padding: 48px 40px;
+        display: flex;
+        align-items: center;
+        color: white;
+      }
+      .brand-content {
+        max-width: 320px;
+      }
+      .logo-img {
+        height: 48px;
+        width: auto;
+        margin-bottom: 32px;
+      }
+      .brand-content h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+      .brand-desc {
+        font-size: 14px;
+        opacity: 0.8;
+        line-height: 1.6;
+        margin-bottom: 36px;
+      }
+      .brand-features {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        opacity: 0.9;
+      }
+      .feature mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        opacity: 0.9;
       }
       .login-card {
         width: 420px;
-        padding: 40px;
-        border-radius: 16px !important;
+        padding: 48px 40px;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       .login-header {
-        text-align: center;
         margin-bottom: 32px;
       }
-      .logo-img {
-        width: 100px;
-        height: auto;
-        display: block;
-        margin: 0 auto 16px;
-      }
       .login-header h1 {
-        font-size: 22px;
+        font-size: 26px;
         font-weight: 700;
         color: #1a237e;
         margin-bottom: 8px;
@@ -114,12 +176,14 @@ import { AuthService } from "../../../core/services/auth.service";
       }
       .full-width {
         width: 100%;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
       }
       .login-btn {
         height: 48px;
-        font-size: 16px;
-        margin-top: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-top: 4px;
+        border-radius: 8px;
       }
       .error-text {
         color: #c62828;
@@ -131,7 +195,7 @@ import { AuthService } from "../../../core/services/auth.service";
         text-align: center;
         margin-top: 24px;
         color: #999;
-        font-size: 12px;
+        font-size: 13px;
       }
     `,
   ],
