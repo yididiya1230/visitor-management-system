@@ -79,7 +79,7 @@ import { AuthService } from '../../../core/services/auth.service';
   `,
   styles: [`
     .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .search-field { width: 300px; }
     .full-table { width: 100%; }

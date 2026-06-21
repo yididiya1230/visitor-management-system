@@ -107,7 +107,7 @@ import { FormsModule } from '@angular/forms';
   `,
   styles: [`
     .page-header { margin-bottom: 24px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .reports-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
     .full-width { width: 100%; margin-bottom: 16px; }
     .date-range { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }

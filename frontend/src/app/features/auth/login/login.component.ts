@@ -33,9 +33,16 @@ import { AuthService } from "../../../core/services/auth.service";
       <div class="login-card-wrapper">
         <div class="brand-section">
           <div class="brand-content">
-            <img src="assets/logo.svg" alt="ECX Logo" class="logo-img">
+            <img
+              src="assets/images/ECX_Logo.jpg"
+              alt="ECX Logo"
+              class="logo-img"
+            />
             <h2>Visitor Management System</h2>
-            <p class="brand-desc">Secure, streamlined visitor tracking and management for ECX facilities.</p>
+            <p class="brand-desc">
+              Secure, streamlined visitor tracking and management for ECX
+              facilities.
+            </p>
             <div class="brand-features">
               <div class="feature">
                 <mat-icon>verified_user</mat-icon>
@@ -62,17 +69,31 @@ import { AuthService } from "../../../core/services/auth.service";
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Username</mat-label>
-              <input matInput formControlName="username" placeholder="Enter username" />
+              <input
+                matInput
+                formControlName="username"
+                placeholder="Enter username"
+              />
               <mat-icon matPrefix>person_outline</mat-icon>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Password</mat-label>
-              <input matInput type="password" formControlName="password" placeholder="Enter password" />
+              <input
+                matInput
+                type="password"
+                formControlName="password"
+                placeholder="Enter password"
+              />
               <mat-icon matPrefix>lock_outline</mat-icon>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" class="full-width login-btn" [disabled]="loginForm.invalid || loading">
+            <button
+              mat-raised-button
+              color="primary"
+              class="full-width login-btn"
+              [disabled]="loginForm.invalid || loading"
+            >
               <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
               <span *ngIf="!loading">Sign In</span>
             </button>
@@ -94,7 +115,7 @@ import { AuthService } from "../../../core/services/auth.service";
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
         padding: 20px;
       }
       .login-card-wrapper {
@@ -104,11 +125,16 @@ import { AuthService } from "../../../core/services/auth.service";
         min-height: 560px;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 20px 60px rgba(26, 35, 126, 0.12);
+        box-shadow: 0 20px 60px rgba(46, 125, 50, 0.12);
       }
       .brand-section {
         flex: 1;
-        background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #0277bd 100%);
+        background: linear-gradient(
+          135deg,
+          #1a237e 0%,
+          #283593 50%,
+          #0277bd 100%
+        );
         padding: 48px 40px;
         display: flex;
         align-items: center;
@@ -167,7 +193,7 @@ import { AuthService } from "../../../core/services/auth.service";
       .login-header h1 {
         font-size: 26px;
         font-weight: 700;
-        color: #1a237e;
+        color: #2e7d32;
         margin-bottom: 8px;
       }
       .subtitle {

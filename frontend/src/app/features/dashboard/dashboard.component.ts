@@ -82,7 +82,7 @@ import { DashboardData } from '../../core/models/dashboard.model';
   `,
   styles: [`
     .dashboard-welcome { margin-bottom: 24px; }
-    .dashboard-welcome h1 { font-size: 28px; font-weight: 700; color: #1a237e; }
+    .dashboard-welcome h1 { font-size: 28px; font-weight: 700; color: #2e7d32; }
     .dashboard-welcome p { color: #666; margin-top: 4px; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 24px; }
     .stat-card { padding: 24px; }
@@ -96,7 +96,7 @@ import { DashboardData } from '../../core/models/dashboard.model';
     .full-table { width: 100%; }
     .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     .checked-in { background: #e8f5e9; color: #2e7d32; }
-    .checked-out { background: #e3f2fd; color: #0277bd; }
+    .checked-out { background: #e8f5e9; color: #2e7d32; }
     .pending { background: #fff3e0; color: #e65100; }
     .no-data { text-align: center; padding: 24px; color: #999; }
   `]
@@ -112,9 +112,9 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboard().subscribe({
       next: (data: DashboardData) => {
         this.stats = [
-          { label: "Today's Visitors", value: data.todayVisits, icon: 'today', color: '#1a237e' },
+          { label: "Today's Visitors", value: data.todayVisits, icon: 'today', color: '#2e7d32' },
           { label: 'Active Visitors', value: data.activeVisitors, icon: 'groups', color: '#2e7d32' },
-          { label: 'Checked Out Today', value: data.checkedOutToday, icon: 'output', color: '#0277bd' },
+          { label: 'Checked Out Today', value: data.checkedOutToday, icon: 'output', color: '#ef6c00' },
           { label: 'Total Hosts', value: data.totalHosts, icon: 'badge', color: '#e65100' }
         ];
         this.recentVisits = data.recentVisits;

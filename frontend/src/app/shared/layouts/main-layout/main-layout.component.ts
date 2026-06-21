@@ -47,7 +47,7 @@ import { AuthService } from "../../../core/services/auth.service";
       <mat-drawer #drawer mode="side" opened class="app-sidenav">
         <div class="sidenav-header">
           <img
-            src="assets/images/ecx-logo.png"
+            src="assets/logo.svg"
             alt="ECX"
             class="sidenav-logo"
             (error)="handleLogoError($event)"
@@ -112,7 +112,7 @@ import { AuthService } from "../../../core/services/auth.service";
         left: 0;
         right: 0;
         z-index: 1000;
-        background: #1a237e;
+        background: #2e7d32;
         color: white;
         height: 64px;
       }
@@ -151,7 +151,7 @@ import { AuthService } from "../../../core/services/auth.service";
       .sidenav-title {
         font-size: 20px;
         font-weight: 700;
-        color: #1a237e;
+        color: #2e7d32;
       }
       .app-content {
         padding: 24px;
@@ -167,12 +167,12 @@ import { AuthService } from "../../../core/services/auth.service";
         font-weight: 500;
       }
       mat-nav-list a:hover {
-        background: #e8eaf6;
+        background: #e8f5e9;
       }
       .active-link {
-        background: #e8eaf6 !important;
-        color: #1a237e !important;
-        border-right: 3px solid #1a237e;
+        background: #e8f5e9 !important;
+        color: #2e7d32 !important;
+        border-right: 3px solid #ef6c00;
       }
     `,
   ],

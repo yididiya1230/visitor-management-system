@@ -65,7 +65,7 @@ import { Host } from '../../../core/models/host.model';
   `,
   styles: [`
     .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .full-table { width: 100%; }
     .no-data { text-align: center; padding: 24px; color: #999; }
   `]

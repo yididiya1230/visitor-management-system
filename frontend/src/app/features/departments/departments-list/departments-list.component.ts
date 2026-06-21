@@ -73,7 +73,7 @@ import { Department } from '../../../core/models/department.model';
   `,
   styles: [`
     .page-header { margin-bottom: 24px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .dept-grid { display: grid; grid-template-columns: 400px 1fr; gap: 24px; }
     .full-width { width: 100%; margin-bottom: 16px; }
     .full-table { width: 100%; }

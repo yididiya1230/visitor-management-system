@@ -71,7 +71,7 @@ import { Host } from '../../../core/models/host.model';
   `,
   styles: [`
     .page-header { margin-bottom: 24px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .visit-form { max-width: 600px; }
     .full-width { width: 100%; margin-bottom: 16px; }
     .form-actions { display: flex; gap: 16px; justify-content: flex-end; margin-top: 24px; }

@@ -95,13 +95,13 @@ import { AuthService } from '../../../core/services/auth.service';
   `,
   styles: [`
     .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .search-field { width: 300px; }
     .full-table { width: 100%; }
     .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
     .checked-in { background: #e8f5e9; color: #2e7d32; }
-    .checked-out { background: #e3f2fd; color: #0277bd; }
+    .checked-out { background: #e8f5e9; color: #2e7d32; }
     .pending { background: #fff3e0; color: #e65100; }
     .cancelled { background: #fce4ec; color: #c62828; }
     .action-btn { margin: 0 4px; padding: 2px 12px; font-size: 12px; line-height: 28px; }

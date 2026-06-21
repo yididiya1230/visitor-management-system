@@ -79,7 +79,7 @@ import { VisitorService } from '../../../core/services/visitor.service';
   `,
   styles: [`
     .page-header { margin-bottom: 24px; }
-    .page-header h1 { font-size: 24px; font-weight: 700; color: #1a237e; }
+    .page-header h1 { font-size: 24px; font-weight: 700; color: #2e7d32; }
     .visitor-form { max-width: 800px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
     .full-width { width: 100%; }
