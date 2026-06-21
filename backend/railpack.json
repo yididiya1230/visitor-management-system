@@ -1,8 +1,19 @@
 {
-  "applies_to": ["ECX.VisitorManagement.slnx"],
-  "config": {
-    "dotnet": {
-      "project": "src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj"
+  "$schema": "https://schema.railpack.com",
+  "steps": {
+    "install": {
+      "commands": [
+        "dotnet restore src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj"
+      ]
+    },
+    "build": {
+      "inputs": [{ "step": "install" }],
+      "commands": [
+        "dotnet publish src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj --no-restore -c Release -o out"
+      ]
     }
+  },
+  "deploy": {
+    "startCommand": "./out/ECX.VisitorManagement.API"
   }
 }
