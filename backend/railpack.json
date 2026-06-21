@@ -7,13 +7,13 @@
   "steps": {
     "install": {
       "commands": [
-        "cd src/ECX.VisitorManagement.API && dotnet restore ECX.VisitorManagement.API.csproj"
+        "dotnet restore ECX.VisitorManagement.slnx"
       ]
     },
     "build": {
       "inputs": [{ "step": "install" }],
       "commands": [
-        "cd src/ECX.VisitorManagement.API && dotnet publish ECX.VisitorManagement.API.csproj --no-restore -c Release -o /app/out"
+        "dotnet publish ECX.VisitorManagement.slnx --no-restore -c Release -o out"
       ]
     }
   },
