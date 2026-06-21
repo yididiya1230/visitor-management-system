@@ -90,7 +90,7 @@ import { AuthService } from "../../../core/services/auth.service";
 
             <button
               mat-raised-button
-              color="primary"
+              color="accent"
               class="full-width login-btn"
               [disabled]="loginForm.invalid || loading"
             >
