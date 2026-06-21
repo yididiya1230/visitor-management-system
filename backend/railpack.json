@@ -7,17 +7,17 @@
   "steps": {
     "install": {
       "commands": [
-        "dotnet restore ECX.VisitorManagement.slnx"
+        "pwd && ls -la"
       ]
     },
     "build": {
       "inputs": [{ "step": "install" }],
       "commands": [
-        "dotnet publish ECX.VisitorManagement.slnx --no-restore -c Release -o out"
+        "pwd && ls -laR"
       ]
     }
   },
   "deploy": {
-    "startCommand": "./out/ECX.VisitorManagement.API"
+    "startCommand": "echo done"
   }
 }
