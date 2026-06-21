@@ -34,7 +34,7 @@ import { DashboardData } from '../../core/models/dashboard.model';
     </div>
 
     <div class="dashboard-actions">
-      <button mat-raised-button color="primary" routerLink="/visitors/new">
+      <button mat-raised-button color="accent" routerLink="/visitors/new">
         <mat-icon>person_add</mat-icon> Register Visitor
       </button>
       <button mat-raised-button color="accent" routerLink="/visits/new">

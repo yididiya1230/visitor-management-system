@@ -125,20 +125,20 @@ import { AuthService } from "../../../core/services/auth.service";
         min-height: 560px;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 20px 60px rgba(46, 125, 50, 0.12);
+        box-shadow: 0 20px 60px rgba(46, 125, 50, 0.15);
       }
       .brand-section {
         flex: 1;
         background: linear-gradient(
           135deg,
-          #1a237e 0%,
-          #283593 50%,
-          #0277bd 100%
+          #a5d6a7 0%,
+          #81c784 50%,
+          #66bb6a 100%
         );
         padding: 48px 40px;
         display: flex;
         align-items: center;
-        color: white;
+        color: #1b5e20;
       }
       .brand-content {
         max-width: 320px;
@@ -153,12 +153,14 @@ import { AuthService } from "../../../core/services/auth.service";
         font-weight: 700;
         margin-bottom: 12px;
         line-height: 1.3;
+        color: #1b5e20;
       }
       .brand-desc {
         font-size: 14px;
         opacity: 0.8;
         line-height: 1.6;
         margin-bottom: 36px;
+        color: #2e7d32;
       }
       .brand-features {
         display: flex;
@@ -171,6 +173,7 @@ import { AuthService } from "../../../core/services/auth.service";
         gap: 12px;
         font-size: 13px;
         opacity: 0.9;
+        color: #2e7d32;
       }
       .feature mat-icon {
         font-size: 20px;

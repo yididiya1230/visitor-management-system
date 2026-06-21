@@ -32,7 +32,7 @@ import { AuthService } from '../../../core/services/auth.service';
           <input matInput [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Visitor, host, purpose...">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button mat-raised-button color="primary" routerLink="/visits/new" *ngIf="canEdit">
+        <button mat-raised-button color="accent" routerLink="/visits/new" *ngIf="canEdit">
           <mat-icon>add</mat-icon> New Visit
         </button>
       </div>

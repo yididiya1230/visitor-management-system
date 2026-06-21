@@ -1,9 +1,23 @@
+@use '@angular/material' as mat;
+
+$theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$green-palette,
+    tertiary: mat.$orange-palette,
+  ),
+));
+
+html {
+  @include mat.all-component-themes($theme);
+}
+
 :root {
   --primary: #2e7d32;
-  --primary-light: #534bae;
-  --primary-dark: #000051;
+  --primary-light: #4caf50;
+  --primary-dark: #1b5e20;
   --secondary: #ef6c00;
-  --accent: #ff6f00;
+  --accent: #ef6c00;
   --success: #2e7d32;
   --warning: #f9a825;
   --danger: #c62828;

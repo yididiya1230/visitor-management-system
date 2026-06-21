@@ -20,7 +20,7 @@ import { Host } from '../../../core/models/host.model';
   template: `
     <div class="page-header">
       <h1>Hosts / Employees</h1>
-      <button mat-raised-button color="primary" routerLink="/hosts/new">
+      <button mat-raised-button color="accent" routerLink="/hosts/new">
         <mat-icon>add</mat-icon> New Host
       </button>
     </div>
