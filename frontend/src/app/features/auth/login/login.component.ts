@@ -90,8 +90,7 @@ import { AuthService } from "../../../core/services/auth.service";
 
             <button
               mat-raised-button
-              color="accent"
-              class="full-width login-btn"
+              class="full-width login-btn signin-btn"
               [disabled]="loginForm.invalid || loading"
             >
               <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
@@ -213,6 +212,17 @@ import { AuthService } from "../../../core/services/auth.service";
         font-weight: 600;
         margin-top: 4px;
         border-radius: 8px;
+      }
+      .signin-btn {
+        background-color: #ffb74d !important;
+        color: #333 !important;
+      }
+      .signin-btn:hover {
+        background-color: #ffa726 !important;
+      }
+      .signin-btn[disabled] {
+        background-color: #ffe0b2 !important;
+        color: #999 !important;
       }
       .error-text {
         color: #c62828;
