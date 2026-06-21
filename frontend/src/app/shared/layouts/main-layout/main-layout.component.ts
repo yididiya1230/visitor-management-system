@@ -52,7 +52,7 @@ import { AuthService } from "../../../core/services/auth.service";
             class="sidenav-logo"
             (error)="handleLogoError($event)"
           />
-          <span class="sidenav-title">VMS</span>
+          <span class="sidenav-title">ETHIOPIA COMMODITY<br/>EXCHANGE</span>
         </div>
         <mat-nav-list>
           <a
