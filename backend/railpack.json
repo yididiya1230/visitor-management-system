@@ -1,23 +1,26 @@
 {
   "$schema": "https://schema.railpack.com",
-  "provider": "dotnet",
   "packages": {
     "dotnet": "10.0"
   },
+  "buildAptPackages": ["libicu-dev"],
   "steps": {
     "install": {
       "commands": [
-        "pwd && ls -la"
+        "pwd",
+        "ls -la",
+        "ls -la src/ECX.VisitorManagement.API/ 2>/dev/null || echo 'src dir not found'",
+        "find . -name '*.csproj' -o -name '*.slnx' 2>/dev/null | head -20"
       ]
     },
     "build": {
       "inputs": [{ "step": "install" }],
       "commands": [
-        "pwd && ls -laR"
+        "echo BUILD_OK"
       ]
     }
   },
   "deploy": {
-    "startCommand": "echo done"
+    "startCommand": "echo DEPLOY_OK"
   }
 }
