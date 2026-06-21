@@ -32,7 +32,7 @@ import { AuthService } from "../../../core/services/auth.service";
     <div class="login-container">
       <mat-card class="login-card">
         <div class="login-header">
-          <div class="logo-placeholder">ECX</div>
+          <img src="assets/logo.svg" alt="ECX Logo" class="logo-img">
           <h1>Visitor Management System</h1>
           <p class="subtitle">Sign in to your account</p>
         </div>
@@ -96,17 +96,10 @@ import { AuthService } from "../../../core/services/auth.service";
         text-align: center;
         margin-bottom: 32px;
       }
-      .logo-placeholder {
-        width: 80px;
-        height: 80px;
-        background: #1a237e;
-        color: white;
-        font-size: 28px;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 16px;
+      .logo-img {
+        width: 100px;
+        height: auto;
+        display: block;
         margin: 0 auto 16px;
       }
       .login-header h1 {
