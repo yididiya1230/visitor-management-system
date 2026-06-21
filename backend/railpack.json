@@ -1,0 +1,8 @@
+{
+  "applies_to": ["ECX.VisitorManagement.slnx"],
+  "config": {
+    "dotnet": {
+      "project": "src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj"
+    }
+  }
+}
