@@ -19,19 +19,19 @@ public static class InfrastructureServiceRegistration
 
         if (environment != "Development")
         {
-            var host = Environment.GetEnvironmentVariable("PGHOST") ?? Environment.GetEnvironmentVariable("DATABASE_URL");
-            var port = Environment.GetEnvironmentVariable("PGPORT") ?? "5432";
-            var db = Environment.GetEnvironmentVariable("PGDATABASE") ?? "railway";
-            var user = Environment.GetEnvironmentVariable("PGUSER") ?? "postgres";
-            var password = Environment.GetEnvironmentVariable("PGPASSWORD");
-
-            if (!string.IsNullOrEmpty(host) && !string.IsNullOrEmpty(password))
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (!string.IsNullOrEmpty(databaseUrl) && Uri.TryCreate(databaseUrl, UriKind.Absolute, out var uri))
             {
+                var host = uri.Host;
+                var port = uri.Port;
+                var db = uri.AbsolutePath.TrimStart('/');
+                var user = uri.UserInfo?.Split(':')[0];
+                var password = uri.UserInfo?.Split(':')[1];
                 connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true";
             }
             else
             {
-                connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? configuration.GetConnectionString("DefaultConnection")!;
+                connectionString = configuration.GetConnectionString("DefaultConnection")!;
             }
         }
         else
