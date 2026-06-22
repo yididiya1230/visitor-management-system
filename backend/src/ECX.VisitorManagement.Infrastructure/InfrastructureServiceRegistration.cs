@@ -15,7 +15,29 @@ public static class InfrastructureServiceRegistration
         IConfiguration configuration)
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
-        var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? configuration.GetConnectionString("DefaultConnection")!;
+        string connectionString;
+
+        if (environment != "Development")
+        {
+            var host = Environment.GetEnvironmentVariable("PGHOST") ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+            var port = Environment.GetEnvironmentVariable("PGPORT") ?? "5432";
+            var db = Environment.GetEnvironmentVariable("PGDATABASE") ?? "railway";
+            var user = Environment.GetEnvironmentVariable("PGUSER") ?? "postgres";
+            var password = Environment.GetEnvironmentVariable("PGPASSWORD");
+
+            if (!string.IsNullOrEmpty(host) && !string.IsNullOrEmpty(password))
+            {
+                connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+            }
+            else
+            {
+                connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? configuration.GetConnectionString("DefaultConnection")!;
+            }
+        }
+        else
+        {
+            connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        }
 
         if (environment == "Development")
         {

@@ -64,12 +64,12 @@ using (var scope = app.Services.CreateScope())
             logger.LogInformation("Database migrated and seeded successfully");
             break;
         }
-        catch (NpgsqlException ex) when (i < maxRetries)
+        catch (Exception ex) when (i < maxRetries)
         {
             logger.LogWarning(ex, "Database connection failed (attempt {Attempt}/{MaxRetries}). Retrying in {Delay}s...", i + 1, maxRetries, delay.TotalSeconds);
             await Task.Delay(delay);
         }
-        catch (NpgsqlException ex)
+        catch (Exception ex)
         {
             logger.LogError(ex, "Database connection failed after {MaxRetries} attempts. Continuing startup...", maxRetries);
         }
