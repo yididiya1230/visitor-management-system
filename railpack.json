@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "dotnet",
+  "packages": {
+    "dotnet": "10.0"
+  },
+  "steps": {
+    "install": {
+      "commands": [
+        "dotnet restore backend/src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj"
+      ]
+    },
+    "build": {
+      "inputs": [{ "step": "install" }],
+      "commands": [
+        "dotnet publish backend/src/ECX.VisitorManagement.API/ECX.VisitorManagement.API.csproj --no-restore -c Release -o out"
+      ]
+    }
+  },
+  "deploy": {
+    "startCommand": "./out/ECX.VisitorManagement.API"
+  }
+}
