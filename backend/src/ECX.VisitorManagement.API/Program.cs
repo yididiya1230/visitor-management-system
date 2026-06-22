@@ -84,15 +84,19 @@ app.MapGet("/health", async (ApplicationDbContext db) =>
     var hasPgPass = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PGPASSWORD"));
     var dbConnected = false;
     var dbError = "";
+    var roleCount = 0;
+    var userCount = 0;
     try
     {
         dbConnected = await db.Database.CanConnectAsync();
+        roleCount = await db.Roles.CountAsync();
+        userCount = await db.Users.CountAsync();
     }
     catch (Exception ex)
     {
         dbError = ex.GetType().Name + ": " + ex.Message;
     }
-    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass, dbConnected, dbError });
+    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass, dbConnected, dbError, roleCount, userCount });
 });
 
 app.UseSwagger();
