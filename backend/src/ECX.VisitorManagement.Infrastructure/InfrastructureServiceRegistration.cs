@@ -1,3 +1,4 @@
+using System.Data.Common;
 using ECX.VisitorManagement.Application.Interfaces;
 using ECX.VisitorManagement.Infrastructure.Data;
 using ECX.VisitorManagement.Infrastructure.Repositories;
@@ -5,6 +6,7 @@ using ECX.VisitorManagement.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace ECX.VisitorManagement.Infrastructure;
 
@@ -22,12 +24,17 @@ public static class InfrastructureServiceRegistration
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             if (!string.IsNullOrEmpty(databaseUrl) && Uri.TryCreate(databaseUrl, UriKind.Absolute, out var uri))
             {
-                var host = uri.Host;
-                var port = uri.Port;
-                var db = uri.AbsolutePath.TrimStart('/');
-                var user = uri.UserInfo?.Split(':')[0];
-                var password = uri.UserInfo?.Split(':')[1];
-                connectionString = $"Host={host};Port={port};Database={db};Username={user};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+                var builder = new NpgsqlConnectionStringBuilder
+                {
+                    Host = uri.Host,
+                    Port = uri.Port,
+                    Database = uri.AbsolutePath.TrimStart('/'),
+                    Username = uri.UserInfo?.Split(':')[0],
+                    Password = uri.UserInfo?.Split(':')[1],
+                    SslMode = SslMode.Require,
+                    TrustServerCertificate = true
+                };
+                connectionString = builder.ConnectionString;
             }
             else
             {
