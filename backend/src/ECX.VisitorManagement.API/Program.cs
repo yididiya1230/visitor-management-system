@@ -6,6 +6,7 @@ using ECX.VisitorManagement.Infrastructure;
 using ECX.VisitorManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -50,8 +51,29 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await context.Database.MigrateAsync();
-    await DbSeeder.SeedAsync(context);
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var maxRetries = 5;
+    var delay = TimeSpan.FromSeconds(3);
+
+    for (int i = 0; i <= maxRetries; i++)
+    {
+        try
+        {
+            await context.Database.MigrateAsync();
+            await DbSeeder.SeedAsync(context);
+            logger.LogInformation("Database migrated and seeded successfully");
+            break;
+        }
+        catch (NpgsqlException ex) when (i < maxRetries)
+        {
+            logger.LogWarning(ex, "Database connection failed (attempt {Attempt}/{MaxRetries}). Retrying in {Delay}s...", i + 1, maxRetries, delay.TotalSeconds);
+            await Task.Delay(delay);
+        }
+        catch (NpgsqlException ex)
+        {
+            logger.LogError(ex, "Database connection failed after {MaxRetries} attempts. Continuing startup...", maxRetries);
+        }
+    }
 }
 
 app.UseSwagger();

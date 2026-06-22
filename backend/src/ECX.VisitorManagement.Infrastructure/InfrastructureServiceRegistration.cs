@@ -15,7 +15,7 @@ public static class InfrastructureServiceRegistration
         IConfiguration configuration)
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
-        var connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? configuration.GetConnectionString("DefaultConnection")!;
 
         if (environment == "Development")
         {
