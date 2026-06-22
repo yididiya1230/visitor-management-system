@@ -76,13 +76,23 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapGet("/health", () =>
+app.MapGet("/health", async (ApplicationDbContext db) =>
 {
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "not-set";
     var hasDbUrl = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DATABASE_URL"));
     var hasPgHost = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PGHOST"));
     var hasPgPass = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PGPASSWORD"));
-    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass });
+    var dbConnected = false;
+    var dbError = "";
+    try
+    {
+        dbConnected = await db.Database.CanConnectAsync();
+    }
+    catch (Exception ex)
+    {
+        dbError = ex.GetType().Name + ": " + ex.Message;
+    }
+    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass, dbConnected, dbError });
 });
 
 app.UseSwagger();
