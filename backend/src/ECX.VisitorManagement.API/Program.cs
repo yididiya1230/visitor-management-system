@@ -55,15 +55,7 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        await context.Database.CanConnectAsync();
-
-        var tables = await context.Database.SqlQuery<string>($"SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'").ToListAsync();
-        if (tables.Count != 0)
-        {
-            logger.LogInformation("Dropping {Count} existing tables for clean reset...", tables.Count);
-            await context.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
-        }
-
+        await context.Database.EnsureDeletedAsync();
         await context.Database.EnsureCreatedAsync();
         logger.LogInformation("Database created successfully");
         await DbSeeder.SeedAsync(context);
@@ -105,8 +97,8 @@ app.MapGet("/health", async (ApplicationDbContext db) =>
                 try
                 {
                     await db.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS \"__EFMigrationsHistory\" CASCADE");
-                    await context.Database.MigrateAsync();
-                    await DbSeeder.SeedAsync(context);
+                    await db.Database.MigrateAsync();
+                    await DbSeeder.SeedAsync(db);
                     dbError = "Reset and re-migrated";
                     roleCount = await db.Roles.CountAsync();
                 }
