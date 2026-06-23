@@ -86,17 +86,37 @@ app.MapGet("/health", async (ApplicationDbContext db) =>
     var dbError = "";
     var roleCount = 0;
     var userCount = 0;
+    var hasAdmin = false;
+    var tryLoginError = "";
     try
     {
         dbConnected = await db.Database.CanConnectAsync();
         roleCount = await db.Roles.CountAsync();
         userCount = await db.Users.CountAsync();
+        hasAdmin = await db.Users.AnyAsync(u => u.Username == "admin");
+        try
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Username == "admin" && u.IsActive);
+            if (user != null)
+            {
+                var role = await db.Roles.FindAsync(user.RoleId);
+                if (role == null) tryLoginError = "Role not found for admin user";
+            }
+            else
+            {
+                tryLoginError = "Admin user not found or inactive";
+            }
+        }
+        catch (Exception ex)
+        {
+            tryLoginError = ex.GetType().Name + ": " + ex.Message;
+        }
     }
     catch (Exception ex)
     {
         dbError = ex.GetType().Name + ": " + ex.Message;
     }
-    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass, dbConnected, dbError, roleCount, userCount });
+    return Results.Ok(new { environment = env, databaseUrl = hasDbUrl, pgHost = hasPgHost, pgPassword = hasPgPass, dbConnected, dbError, roleCount, userCount, hasAdmin, tryLoginError });
 });
 
 app.UseSwagger();
