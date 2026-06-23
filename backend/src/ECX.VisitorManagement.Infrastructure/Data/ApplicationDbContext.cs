@@ -60,7 +60,7 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.IdCardNumber).HasMaxLength(50);
             entity.Property(e => e.Address).HasMaxLength(500);
 
-            entity.HasIndex(e => e.IdCardNumber).IsUnique().HasFilter("[IdCardNumber] IS NOT NULL");
+            entity.HasIndex(e => e.IdCardNumber).IsUnique();
 
             entity.HasQueryFilter(e => !e.IsDeleted);
         });

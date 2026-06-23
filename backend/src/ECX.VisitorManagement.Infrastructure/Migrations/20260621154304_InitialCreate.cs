@@ -261,8 +261,7 @@ namespace ECX.VisitorManagement.Infrastructure.Migrations
                 name: "IX_Visitors_IdCardNumber",
                 table: "Visitors",
                 column: "IdCardNumber",
-                unique: true,
-                filter: "[IdCardNumber] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visits_CheckInTime",

@@ -396,8 +396,7 @@ namespace ECX.VisitorManagement.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdCardNumber")
-                        .IsUnique()
-                        .HasFilter("[IdCardNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Visitors");
                 });
