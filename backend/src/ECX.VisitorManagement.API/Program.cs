@@ -60,19 +60,38 @@ using (var scope = app.Services.CreateScope())
         try
         {
             await context.Database.MigrateAsync();
-            await DbSeeder.SeedAsync(context);
-            logger.LogInformation("Database migrated and seeded successfully");
             break;
         }
         catch (Exception ex) when (i < maxRetries)
         {
-            logger.LogWarning(ex, "Database connection failed (attempt {Attempt}/{MaxRetries}). Retrying in {Delay}s...", i + 1, maxRetries, delay.TotalSeconds);
+            logger.LogWarning(ex, "Database migration failed (attempt {Attempt}/{MaxRetries}). Retrying in {Delay}s...", i + 1, maxRetries, delay.TotalSeconds);
             await Task.Delay(delay);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Database connection failed after {MaxRetries} attempts. Continuing startup...", maxRetries);
+            logger.LogError(ex, "Migration failed after {MaxRetries} attempts. Attempting reset...", maxRetries);
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS \"__EFMigrationsHistory\" CASCADE");
+                logger.LogInformation("Dropped corrupted __EFMigrationsHistory");
+                await context.Database.MigrateAsync();
+                logger.LogInformation("Re-migration successful");
+            }
+            catch (Exception ex2)
+            {
+                logger.LogError(ex2, "Migration reset also failed. Continuing startup...");
+            }
         }
+    }
+
+    try
+    {
+        await DbSeeder.SeedAsync(context);
+        logger.LogInformation("Database seeded successfully");
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "Seeding skipped (likely already seeded)");
     }
 }
 
@@ -91,7 +110,33 @@ app.MapGet("/health", async (ApplicationDbContext db) =>
     try
     {
         dbConnected = await db.Database.CanConnectAsync();
-        roleCount = await db.Roles.CountAsync();
+        dbError = "Connected";
+
+        if (dbConnected)
+        {
+            try
+            {
+                roleCount = await db.Roles.CountAsync();
+            }
+            catch (Exception ex)
+            {
+                dbError = ex.GetType().Name + ": " + ex.Message;
+
+                try
+                {
+                    await db.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS \"__EFMigrationsHistory\" CASCADE");
+                    await context.Database.MigrateAsync();
+                    await DbSeeder.SeedAsync(context);
+                    dbError = "Reset and re-migrated";
+                    roleCount = await db.Roles.CountAsync();
+                }
+                catch (Exception ex2)
+                {
+                    dbError = "Reset failed: " + ex2.GetType().Name + ": " + ex2.Message;
+                }
+            }
+        }
+
         userCount = await db.Users.CountAsync();
         hasAdmin = await db.Users.AnyAsync(u => u.Username == "admin");
         try
