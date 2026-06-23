@@ -52,46 +52,17 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    var maxRetries = 5;
-    var delay = TimeSpan.FromSeconds(3);
-
-    for (int i = 0; i <= maxRetries; i++)
-    {
-        try
-        {
-            await context.Database.MigrateAsync();
-            break;
-        }
-        catch (Exception ex) when (i < maxRetries)
-        {
-            logger.LogWarning(ex, "Database migration failed (attempt {Attempt}/{MaxRetries}). Retrying in {Delay}s...", i + 1, maxRetries, delay.TotalSeconds);
-            await Task.Delay(delay);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Migration failed after {MaxRetries} attempts. Attempting reset...", maxRetries);
-            try
-            {
-                await context.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS \"__EFMigrationsHistory\" CASCADE");
-                logger.LogInformation("Dropped corrupted __EFMigrationsHistory");
-                await context.Database.MigrateAsync();
-                logger.LogInformation("Re-migration successful");
-            }
-            catch (Exception ex2)
-            {
-                logger.LogError(ex2, "Migration reset also failed. Continuing startup...");
-            }
-        }
-    }
 
     try
     {
+        await context.Database.EnsureCreatedAsync();
+        logger.LogInformation("Database ensured created");
         await DbSeeder.SeedAsync(context);
         logger.LogInformation("Database seeded successfully");
     }
     catch (Exception ex)
     {
-        logger.LogWarning(ex, "Seeding skipped (likely already seeded)");
+        logger.LogWarning(ex, "Database initialization failed. Continuing startup...");
     }
 }
 
